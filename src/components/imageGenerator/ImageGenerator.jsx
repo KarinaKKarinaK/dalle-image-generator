@@ -5,6 +5,9 @@ const ImageGenerator = () => {
   return (
     <div className="ai image-generator">
         <div className="header">AI Image <span>generator</span></div>
+        <div className="img-loading">
+          <div className="image"></div>
+        </div>
     </div>
   )
 };
