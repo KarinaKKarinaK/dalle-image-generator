@@ -1,6 +1,6 @@
 import React from "react";
 import "./ImageGenerator.css"; 
-import default_image from "../../../assets/default_image.svg"; // Assuming you have a default image in this path
+import default_image from "../assets/default_image.svg"; // Assuming you have a default image in this path
 
 const ImageGenerator = () => {
   return (
