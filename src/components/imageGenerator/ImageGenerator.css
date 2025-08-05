@@ -13,3 +13,8 @@
     font-size: 500;
     padding-bottom: 30px;
 }
+
+.header span{
+    color: #DE1B89;
+    font-weight: 600;
+}
