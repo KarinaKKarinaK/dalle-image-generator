@@ -1,4 +1,5 @@
-.ai image-display {
+/* Main container for the AI image generator */
+.ai.image-generator {
   display: flex;
   flex-direction: column;
   margin: auto;
@@ -6,15 +7,77 @@
   margin-top: 80px;
   margin-bottom: 20px;
   gap: 30px;
+  max-width: 800px;
+  padding: 20px;
 }
 
+/* Header styling */
 .header {
-    font-size: 2rem;
-    font-size: 500;
-    padding-bottom: 30px;
+  font-size: 2rem;
+  font-weight: 500;
+  padding-bottom: 30px;
+  text-align: center;
 }
 
-.header span{
-    color: #DE1B89;
-    font-weight: 600;
+.header span {
+  color: #DE1B89;
+  font-weight: 600;
+}
+
+/* Image loading container */
+.img-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 512px;
+  padding: 20px;
+}
+
+/* Image container */
+.image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 512px;
+  /* border: 2px dashed #ccc; */
+  border-radius: 8px;
+  /* background-color: #f9f9f9; */
+  transition: all 0.3s ease;
+}
+
+.image:hover {
+  border-color: #DE1B89;
+  background-color: #f0f0f0;
+}
+
+/* Image styling */
+.image img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  opacity: 0.7;
+  transition: opacity 0.3s ease;
+}
+
+.image img:hover {
+  opacity: 1;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .ai.image-generator {
+    margin-top: 40px;
+    padding: 15px;
+  }
+  
+  .header {
+    font-size: 1.5rem;
+    padding-bottom: 20px;
+  }
+  
+  .image {
+    height: 300px;
+  }
 }
