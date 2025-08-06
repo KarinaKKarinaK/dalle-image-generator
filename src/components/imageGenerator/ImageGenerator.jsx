@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import "./ImageGenerator.css";
 import default_image from "../assets/default_image.svg"; // Assuming you have a default image in this path
- // Adjust the path as necessary
+// Adjust the path as necessary
 
 const ImageGenerator = () => {
   const [image_url, setImage_url] = useState("/");
@@ -10,30 +10,65 @@ const ImageGenerator = () => {
   const imageGenerator = async () => {
     if (inputRef.current.value === "") {
       alert("Please enter a description for the image.");
-      return 0;
+      return;
     }
-    const response = await fetch(
+
+    // Check if API key is available
+    if (!process.env.REACT_APP_OPENAI_API_KEY) {
+      alert("OpenAI API key is not configured. Please check your .env file.");
+      return;
+    }
+
+    try {
+      const response = await fetch(
         "https://api.openai.com/v1/images/generations",
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            "Authorization": `Bearer ${process.env.REACT_APP_OPENAI_API_KEY}`,
+            Authorization: `Bearer ${process.env.REACT_APP_OPENAI_API_KEY}`,
           },
           body: JSON.stringify({
             model: "dall-e-2",
             prompt: inputRef.current.value,
             n: 1,
             size: "512x512",
-            response_format: "url"
+            response_format: "url",
           }),
         }
       );
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error("API Error:", errorData);
+        
+        if (response.status === 401) {
+          throw new Error("Invalid API key. Please check your OpenAI API key.");
+        } else if (response.status === 429) {
+          throw new Error("Rate limit exceeded. Please try again later.");
+        } else if (response.status === 400) {
+          throw new Error(`Bad request: ${errorData.error?.message || 'Invalid request format'}`);
+        } else {
+          throw new Error(`API request failed with status ${response.status}`);
+        }
+      }
+
+      const data = await response.json();
+      console.log("API Response:", data);
       
-    let data = await response.json()
-    let data_array = data.data;
-    setImage_url(data_array[0].url);
-  }
+      // Check if data structure is correct
+      if (data && data.data && data.data.length > 0 && data.data[0].url) {
+        setImage_url(data.data[0].url);
+      } else {
+        console.error("Unexpected API response structure:", data);
+        throw new Error("No image URL received from API");
+      }
+      
+    } catch (error) {
+      console.error("Error generating image:", error);
+      alert(`Error: ${error.message}`);
+    }
+  };
 
   return (
     <div className="ai image-generator">
@@ -53,7 +88,14 @@ const ImageGenerator = () => {
           className="search-input"
           placeholder="Describe your image..."
         />
-        <div className="generate-btn" onClick={()=>{imageGenerator()}}>Generate</div>
+        <div
+          className="generate-btn"
+          onClick={() => {
+            imageGenerator();
+          }}
+        >
+          Generate
+        </div>
         {/* <button className="generate-btn">Generate</button> */}
       </div>
     </div>
