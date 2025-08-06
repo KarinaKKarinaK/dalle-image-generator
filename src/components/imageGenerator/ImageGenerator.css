@@ -8,14 +8,14 @@
   margin-bottom: 20px;
   gap: 30px;
   max-width: 800px;
-  padding: 20px;
+  padding: 10px;
 }
 
 /* Header styling */
 .header {
-  font-size: 2rem;
-  font-weight: 500;
-  padding-bottom: 20px;
+  font-size: 2.7rem;
+  font-weight: 700;
+  padding-bottom: 7px;
   text-align: center;
 }
 
@@ -51,7 +51,7 @@
 
 .image:hover {
   border-color: #DE1B89;
-  background-color: #f0f0f0;
+  background-color: transparent;
 }
 
 /* Image styling */
@@ -106,6 +106,43 @@
     font-size: 20px;
     cursor: pointer;
     /* transition: background-color 0.3s ease; */
+}
+
+.download-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 300px;
+    height: 45px;
+    background: #DE1B89;
+    /* background-color: #DE1B89; */
+    color: white;
+    border: none;
+    border-radius: 25px;
+    font-size: 14px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 15px;
+    z-index: 10;
+    position: relative;
+    box-shadow: 0 2px 8px rgba(167, 40, 104, 0.3);
+}
+
+.download-btn:hover {
+    background: #DE1B89;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(167, 40, 104, 0.3);
+}
+
+.download-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 6px rgba(167, 40, 104, 0.3);
+}
+
+.download-icon {
+    font-size: 18px;
 }
 
 .loading-bar {
@@ -184,5 +221,11 @@
   .generate-btn {
     width: 140px;
     font-size: 18px;
+  }
+  
+  .download-btn {
+    width: 180px;
+    height: 40px;
+    font-size: 15px;
   }
 }

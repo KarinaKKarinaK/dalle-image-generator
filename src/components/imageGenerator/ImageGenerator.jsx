@@ -38,6 +38,33 @@ const ImageGenerator = () => {
     return () => clearInterval(interval);
   }, []);
 
+  // Function to download the generated image
+  const downloadImage = async () => {
+    if (image_url === "/") {
+      alert("No image to download. Please generate an image first.");
+      return;
+    }
+
+    try {
+      const response = await fetch(image_url);
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `ai-generated-image-${Date.now()}.png`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      
+      // Clean up the object URL
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error("Error downloading image:", error);
+      alert("Failed to download image. Please try again.");
+    }
+  };
+
   const imageGenerator = async () => {
     if (inputRef.current.value === "") {
       alert("Please enter a description for the image.");
@@ -118,6 +145,23 @@ const ImageGenerator = () => {
             alt="AI Generated"
           />
         </div>
+        
+        {/* Download button - only show when there's a generated image */}
+        {image_url !== "/" && (
+          <button className="download-btn" onClick={downloadImage}>
+            {/* <span className="download-icon">⬇️</span> */}
+            Download Image
+          </button>
+        )}
+        
+        {image_url === "/" && (
+          <button className="download-btn" style={{background: '#6c757d'}} disabled>
+            {/* <span className="download-icon">⬇️</span> */}
+            Generate Image To Download
+          </button>
+        )}
+    
+        
         {loading && (
           <div className="loading">
             <div className="loading-bar" key={loadingKey}></div>
