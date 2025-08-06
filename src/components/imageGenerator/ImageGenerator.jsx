@@ -155,7 +155,7 @@ const ImageGenerator = () => {
         )}
         
         {image_url === "/" && (
-          <button className="download-btn" style={{background: '#6c757d'}} disabled>
+          <button className="download-btn" disabled>
             {/* <span className="download-icon">⬇️</span> */}
             Generate Image To Download
           </button>
