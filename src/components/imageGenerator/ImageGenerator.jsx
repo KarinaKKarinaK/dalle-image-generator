@@ -90,10 +90,10 @@ const ImageGenerator = () => {
             Authorization: `Bearer ${process.env.REACT_APP_OPENAI_API_KEY}`,
           },
           body: JSON.stringify({
-            model: "dall-e-2",
+            model: "dall-e-3",
             prompt: inputRef.current.value,
             n: 1,
-            size: "512x512",
+            size: "1024x1024",
             response_format: "url",
           }),
         }
