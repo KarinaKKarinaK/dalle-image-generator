@@ -5,7 +5,9 @@ A modern, responsive React application that generates stunning AI images using O
 ## Demo
 
 ### Screen Recording
-![App Demo](src/components/assets/Screen Recording 2025-08-06 at 15.38.18.mp4)
+[Watch Demo Video](src/components/assets/Screen%20Recording%202025-08-06%20at%2015.38.18.mov)
+
+*Note: Click the link above to download and view the demo video*
 
 ### Screenshots
 ![Main Interface](src/components/assets/Screenshot%202025-08-06%20at%2015.31.58.png)
