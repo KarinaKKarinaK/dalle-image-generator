@@ -5,6 +5,8 @@ import default_image from "../assets/default_image.svg"; // Assuming you have a 
 
 const ImageGenerator = () => {
   const [image_url, setImage_url] = useState("/");
+  const [loading, setLoading] = useState(false);
+  const [loadingKey, setLoadingKey] = useState(0); // Key to restart animation
   let inputRef = useRef(null);
 
   const imageGenerator = async () => {
@@ -18,6 +20,9 @@ const ImageGenerator = () => {
       alert("OpenAI API key is not configured. Please check your .env file.");
       return;
     }
+
+    setLoading(true); // Start loading
+    setLoadingKey(prev => prev + 1); // Reset animation by changing key
 
     try {
       const response = await fetch(
@@ -67,6 +72,8 @@ const ImageGenerator = () => {
     } catch (error) {
       console.error("Error generating image:", error);
       alert(`Error: ${error.message}`);
+    } finally {
+      setLoading(false); // Stop loading regardless of success or failure
     }
   };
 
@@ -79,6 +86,12 @@ const ImageGenerator = () => {
         <div className="image">
           <img src={image_url === "/" ? default_image : image_url} alt=""></img>
         </div>
+        {loading && (
+          <div className="loading">
+            <div className="loading-bar" key={loadingKey}></div>
+            <div className="loading-text">Loading...</div>
+          </div>
+        )}
       </div>
 
       <div className="search-box">
