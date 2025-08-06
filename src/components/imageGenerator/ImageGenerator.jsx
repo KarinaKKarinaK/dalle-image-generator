@@ -1,13 +1,42 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import "./ImageGenerator.css";
-import default_image from "../assets/default_image.svg"; // Assuming you have a default image in this path
-// Adjust the path as necessary
+
+// Import all images from ai-images folder
+import image1 from "../assets/ai-images/ChatGPT Image Aug 6, 2025, 01_44_39 PM.png";
+import image2 from "../assets/ai-images/ChatGPT Image Aug 6, 2025, 01_45_10 PM.png";
+import image3 from "../assets/ai-images/ChatGPT Image Aug 6, 2025, 01_50_53 PM.png";
+import image4 from "../assets/ai-images/ChatGPT Image Aug 6, 2025, 01_53_48 PM.png";
+import image5 from "../assets/ai-images/ChatGPT Image Aug 6, 2025, 02_17_13 PM.png";
+import image6 from "../assets/ai-images/ChatGPT Image Aug 6, 2025, 02_19_14 PM.png";
+import image7 from "../assets/ai-images/ChatGPT Image Aug 6, 2025, 02_22_11 PM.png";
+import image8 from "../assets/ai-images/ChatGPT Image Aug 6, 2025, 02_25_27 PM.png";
+import image9 from "../assets/ai-images/ChatGPT Image Aug 6, 2025, 02_34_04 PM.png";
+
+// Array of placeholder images
+const placeholderImages = [image1, image2, image3, image4, image5, image6, image7, image8, image9];
 
 const ImageGenerator = () => {
   const [image_url, setImage_url] = useState("/");
   const [loading, setLoading] = useState(false);
   const [loadingKey, setLoadingKey] = useState(0); // Key to restart animation
+  const [currentPlaceholder, setCurrentPlaceholder] = useState(0); // Index for current placeholder image
   let inputRef = useRef(null);
+
+  // Effect to change placeholder image every 40 seconds
+  useEffect(() => {
+    const getRandomIndex = () => Math.floor(Math.random() * placeholderImages.length);
+    
+    // Set initial random image
+    setCurrentPlaceholder(getRandomIndex());
+    
+    // Change image every 40 seconds
+    const interval = setInterval(() => {
+      setCurrentPlaceholder(getRandomIndex());
+    }, 40000); // 40 seconds
+
+    // Cleanup interval on component unmount
+    return () => clearInterval(interval);
+  }, []);
 
   const imageGenerator = async () => {
     if (inputRef.current.value === "") {
@@ -84,7 +113,10 @@ const ImageGenerator = () => {
       </div>
       <div className="img-loading">
         <div className="image">
-          <img src={image_url === "/" ? default_image : image_url} alt=""></img>
+          <img 
+            src={image_url === "/" ? placeholderImages[currentPlaceholder] : image_url} 
+            alt="AI Generated"
+          />
         </div>
         {loading && (
           <div className="loading">
