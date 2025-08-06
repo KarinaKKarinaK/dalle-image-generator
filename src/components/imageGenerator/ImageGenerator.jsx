@@ -1,6 +1,7 @@
 import React, { useRef, useState } from "react";
 import "./ImageGenerator.css";
 import default_image from "../assets/default_image.svg"; // Assuming you have a default image in this path
+import REACT_APP_OPENAI_API_KEY from "../../../.env.local"; // Adjust the path as necessary
 
 const ImageGenerator = () => {
   const [image_url, setImage_url] = useState("/");
@@ -11,7 +12,22 @@ const ImageGenerator = () => {
       alert("Please enter a description for the image.");
       return 0;
     }
-    const response = await fetch("https://api.openai.com/v1/images/generations")
+    const response = await fetch(
+        "https://api.openai.com/v1/images/generations",
+        {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${REACT_APP_OPENAI_API_KEY}`,
+                "User-Agent": "Chrome",
+            },
+            body: JSON.stringify({
+                prompt: inputRef.current.value,
+                n: 1,
+                size: "1024x1024"
+            })
+        }
+    )
   }
 
   return (
