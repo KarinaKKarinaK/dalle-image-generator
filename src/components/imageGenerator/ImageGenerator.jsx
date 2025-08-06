@@ -6,6 +6,14 @@ const ImageGenerator = () => {
   const [image_url, setImage_url] = useState("/");
   let inputRef = useRef(null);
 
+  const imageGenerator = async () => {
+    if (inputRef.current.value === "") {
+      alert("Please enter a description for the image.");
+      return 0;
+    }
+    const response = await fetch("https://api.openai.com/v1/images/generations")
+  }
+
   return (
     <div className="ai image-generator">
       <div className="header">
